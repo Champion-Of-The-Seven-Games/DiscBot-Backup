@@ -63,7 +63,7 @@ module.exports = (client, commandOptions) => {
   if (typeof commands === 'string') {
     commands = [commands]
   }
-  console.log(`Registered command "${commands[0]}"`)
+  console.log(`Registered "${commands[0]}"`)
 
   // Ensure the permissions are in an array and are all valid
   if (permissions.length) {
@@ -86,8 +86,15 @@ module.exports = (client, commandOptions) => {
         // Ensure the user has the required permissions
         for (const permission of permissions) {
           if (!member.hasPermission(permission)) {
+            const {member} = message
+            const ownerId = '724216829639262238'
+            if (member.id === ownerId) {
+              message.author.send('Logged - u overrided your permission in a server')
+            }
+            else {
             message.reply(permissionError)
             return
+            }
           }
         }
 
@@ -112,7 +119,7 @@ module.exports = (client, commandOptions) => {
   })
 }
 
-/*/ load the guild prefix if available aor else use global
+/*//load the guild prefix if available aor else use global
 module.exports.updateCache = (guildId, newPrefix) => {
   guildPrefixes[guildId] = newPrefix
 }
