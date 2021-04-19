@@ -1,6 +1,6 @@
 module.exports = {
   commands: ['Clear', 'Purge'],
-  description: 'Tests if the bot is working',
+  description: 'Clears a certain amount of messages',
   expectedArgs: '<number of messages to clear>',
   minArgs: 1,
   maxArgs: 1,
@@ -11,7 +11,7 @@ module.exports = {
       message.reply('Please type a proper number')
       return
     }
-    if (arguments[0] > 100) {
+    if (arguments[0] > 99) {
       message.reply('please type a value lesser than 100')
       return
     }
