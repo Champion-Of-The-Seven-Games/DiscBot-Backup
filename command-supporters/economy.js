@@ -1,36 +1,72 @@
 // import mogo and the proile schema to use them
 const mongo = require('../mongo')
 const profileSchema = require('../schemas/profile-schema')
+// create cache for faster operations if repeated
+const coinsCache = {} // { 'guildId-userId': coins }
 
 // placeholder for later stuff
 module.exports = (client) => {}
 
-// export the function getMoney to check the money of a user
-module.exports.getMoney = async (guildId, userId) => {
-  return await mongo().then(async mongoose => {
+// function to add coins to a user
+module.exports.addCoins = async (guildId, userId, coins) => {
+  return await mongo().then(async (mongoose) => {
     try {
-      // wait till found guild id and user id in profile schema
+      const result = await profileSchema.findOneAndUpdate(
+        {
+          guildId,
+          userId,
+        },
+        {
+          guildId,
+          userId,
+          $inc: {
+            coins,
+          },
+        },
+        {
+          upsert: true,
+          new: true,
+        }
+      )
+
+      coinsCache[`${guildId}-${userId}`] = result.coins
+
+      return result.coins
+    } finally {
+      mongoose.connection.close()
+    }
+  })
+}
+
+// funciton to get coins of a user
+module.exports.getCoins = async (guildId, userId) => {
+  const cachedValue = coinsCache[`${guildId}-${userId}`]
+  if (cachedValue) {
+    return cachedValue
+  }
+
+  return await mongo().then(async (mongoose) => {
+    try {
       const result = await profileSchema.findOne({
         guildId,
-        userId
+        userId,
       })
 
-      // set money temporarily to 0
-      let money = 0
-      // if data already exists then import it
-      if (result) {money = result.money}
-      // if data doesnt exist then create new
-      else {
+      let coins = 0
+      if (result) {
+        coins = result.coins
+      } else {
         await new profileSchema({
           guildId,
           userId,
-          money
+          coins,
         }).save()
       }
-      return money
-    }
-    finally {
-      // close the mongo connection once all tasks are completed
+
+      coinsCache[`${guildId}-${userId}`] = coins
+
+      return coins
+    } finally {
       mongoose.connection.close()
     }
   })
