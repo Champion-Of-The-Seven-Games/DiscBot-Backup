@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Latency', 'Ping'],
+  commands: ['Latency', 'latency', 'Ping', 'ping'],
   description: 'Checks the latency of the bot',
   callback: (message) => {
     message.channel.send('calculating the latency...').then((resultMessage) => {

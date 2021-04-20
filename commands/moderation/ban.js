@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Ban', 'Block'],
+  commands: ['Ban', 'ban', 'Block', 'block'],
   description: 'bans the mentioned user unless they have a higher role than the bot',
   epextedArgs: '<mention the user to ban>',
   minArgs: 1,

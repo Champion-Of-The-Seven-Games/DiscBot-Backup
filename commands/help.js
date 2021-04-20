@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 module.exports = {
-  commands: ['Help', 'Commands'],
+  commands: ['Help', 'help', 'Commands', 'commands'],
   description: 'Displays all the valid commands of the bot',
   expectedArgs: '<Category> <Command>',
   minArgs: 0,

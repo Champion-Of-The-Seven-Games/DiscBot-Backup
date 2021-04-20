@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Invite', 'InvLink'],
+  commands: ['Invite', 'invite'],
   description: 'Displays the invite link of the bot',
   callback: (message) => {
     message.channel.send(`

@@ -1,7 +1,7 @@
 const economy = require('../../command-supporters/economy')
 
 module.exports = {
-  commands: ['Balance', 'Bal'],
+  commands: ['Balance', 'balance', 'Bal', 'bal'],
   description: 'Shows the balance of a user',
   expectedArgs: '<mention the user(optional)>',
   minArgs: 0,

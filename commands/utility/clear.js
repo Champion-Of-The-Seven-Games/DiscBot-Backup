@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Clear', 'Purge'],
+  commands: ['Clear', 'clear', 'Purge', 'purge'],
   description: 'Clears a certain amount of messages',
   expectedArgs: '<number of messages to clear>',
   minArgs: 1,

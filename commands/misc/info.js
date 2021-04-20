@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Info', 'Information'],
+  commands: ['Info', 'info', 'Information', 'information'],
   description: 'Displays information about the bot',
   callback: (message) => {
     message.channel.send(`

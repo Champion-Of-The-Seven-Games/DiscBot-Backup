@@ -47,16 +47,13 @@ const validatePermissions = (permissions) => {
   }
 }
 
-module.exports = (client, commandOptions) => {
+const allCommands = {}
+
+module.exports = (commandOptions) => {
   let {
     commands,
     description = 'no information available on this command',
-    expectedArgs = '',
-    minArgs = 0,
-    maxArgs = null,
     permissions = [],
-    permissionError = 'You do not have permission to run this command.',
-    callback,
   } = commandOptions
 
   // Ensure the command and aliases are in an array
@@ -72,49 +69,66 @@ module.exports = (client, commandOptions) => {
     }
     validatePermissions(permissions)
   }
+  for (const command of commands) {
+    allCommands[command] = {
+      ...commandOptions,
+      commands,
+      permissions
+    }
+  }
+}
 
+module.exports.listen = (client) => {
   // Check if any user is calling a command
   client.on('message', (message) => {
     const { member, content, guild } = message
     const prefix = globalPrefix
 
-    for (const alias of commands) {
-      const command = `${prefix}${alias.toLowerCase()}`
+    const arguments = content.split(/[ ]+/)
+    const name = arguments.shift()
 
-      if (content.toLowerCase().startsWith(`${command} `) || content.toLowerCase() === command) {
-        // A command has been ran
-        // Ensure the user has the required permissions
-        for (const permission of permissions) {
-          if (!member.hasPermission(permission)) {
-            const {member} = message
-            const ownerId = '724216829639262238'
-            if (member.id === ownerId) {
-              message.author.send('Logged - u overrided your permission in a server')
-            }
-            else {
-            message.reply(permissionError)
-            return
-            }
-          }
-        }
-
-        const arguments = content.split(/[ ]+/)
-        arguments.shift()
-
-        // Ensure that the user types in correct number of arguments
-        if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs))
-        {
-          message.reply(
-            `Incorrect syntax! Please use ${prefix}${alias} ${expectedArgs}`
-          )
-          return
-        }
-
-        // Finally handle the command if all requirements are met
-        callback(message, arguments, arguments.join(' '), client)
-
+    if (name.startsWith(prefix)) {
+      const command = allCommands[name.replace(prefix, '')]
+      if (!command) {
         return
       }
+
+      const {
+        expextedArgs,
+        minArgs = 0,
+        maxArgs = null,
+        permissions,
+        permissionError = 'You do not have permission to use this command',
+        callback
+      } = command
+
+      // A command has been ran
+      // Ensure the user has the required permissions
+      for (const permission of permissions) {
+        if (!member.hasPermission(permission)) {
+          const {member} = message
+          const ownerId = '724216829639262238'
+          if (member.id === ownerId) {
+            message.author.send('Logged - u overrided your permission in a server')
+          }
+          else {
+          message.reply(permissionError)
+          return
+          }
+        }
+      }
+
+      // Ensure that the user types in correct number of arguments
+      if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs))
+      {
+        message.reply(
+          `Incorrect syntax! Please use ${prefix}${alias} ${expectedArgs}`
+        )
+        return
+      }
+
+      // Finally handle the command if all requirements are met
+      callback(message, arguments, arguments.join(' '), client)
     }
   })
 }

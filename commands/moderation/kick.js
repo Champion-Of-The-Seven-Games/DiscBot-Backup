@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['Kick', 'Remove'],
+  commands: ['Kick', 'kick', 'Remove', 'remove'],
   description: 'Kicks the mentioned user unless they have a higher role than the bot',
   epextedArgs: '<mention the user to kick>',
   minArgs: 1,

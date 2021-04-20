@@ -1,5 +1,5 @@
 module.exports = {
-  commands: ['CreateChannel', 'CreatetChnl'],
+  commands: ['CreateChannel', 'createchannel'],
   description: 'Creates a text or voice channel',
   expectedArgs: '<channel type> <channel name>',
   minArgs: 2,
