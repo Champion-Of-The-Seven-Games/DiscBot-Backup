@@ -5,15 +5,23 @@ const reqString = {
   required: true
 }
 
-// store the guild id, use id and money
+// store the guild id, user id, xp, level and money
 const profileSchema = mongoose.Schema({
   guildId: reqString,
   userId: reqString,
   coins: {
     type: Number,
-    required: true
-  }
+    default: 0,
+  },
+  xp: {
+    type: Number,
+    default: 0,
+  },
+  level: {
+    type: Number,
+    default: 1,
+  },
 })
 
-// export all the required data to the mongo database
+// export the schema
 module.exports = mongoose.model('profiles', profileSchema)

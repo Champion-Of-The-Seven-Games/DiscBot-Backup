@@ -5,6 +5,8 @@ const client = new Discord.Client()
 const config = require('./config.json')
 // import path and fs to use the command handler
 const loadCommands = require('./commands/load-commands')
+// import levels to use the levelling system
+const levels = require('./command-supporters/levels')
 
 // https://www.youtube.com/playlist?list=PLaxxQQak6D_fxb9_-YsmRwxfw5PH9xALe
 
@@ -49,6 +51,7 @@ client.on('ready', () => {
   )
   
   loadCommands(client)
+  levels(client)
 })
 
 // login to the bot and get it online
