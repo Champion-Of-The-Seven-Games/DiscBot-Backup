@@ -1,6 +1,8 @@
+// import mongo and profile schema for the leveling system
 const mongo = require('../mongo')
 const profileSchema = require('../schemas/profile-schema')
 
+// listen for messages and add xp every time a message is sent
 module.exports = (client) => {
   client.on('message', (message) => {
     const { guild, member } = message

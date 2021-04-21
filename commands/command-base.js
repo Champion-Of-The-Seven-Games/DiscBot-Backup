@@ -1,7 +1,8 @@
-// const mongo = require('../mongo')
+// import mongo, command prefix schema, global prefix and guild prefixes to use different prefix
+const mongo = require('../mongo')
 const {globalPrefix} = require('../config.json')
-//const commandPrefixSchema = require('/home/runner/DiscBot/schemas/command-prefix-schema')
-// const guildPrefixes = {}
+const commandPrefixSchema = require('/home/runner/DiscBot/schemas/command-prefix-schema')
+const guildPrefixes = {} // { 'guildId' : 'prefix' }
 
 // check if the given permission is valid
 const validatePermissions = (permissions) => {
@@ -47,8 +48,10 @@ const validatePermissions = (permissions) => {
   }
 }
 
+// save commands inside an object
 const allCommands = {}
 
+// export and check all the command options
 module.exports = (commandOptions) => {
   let {
     commands,
@@ -79,10 +82,10 @@ module.exports = (commandOptions) => {
 }
 
 module.exports.listen = (client) => {
-  // Check if any user is calling a command
+  // listen for commands
   client.on('message', (message) => {
     const { member, content, guild } = message
-    const prefix = globalPrefix
+    const prefix = guildPrefixes[guild.id] || globalPrefix
 
     const arguments = content.split(/[ ]+/)
     const name = arguments.shift()
@@ -133,7 +136,7 @@ module.exports.listen = (client) => {
   })
 }
 
-/*//load the guild prefix if available aor else use global
+// load the guild prefix if exists or else use the global prefix
 module.exports.updateCache = (guildId, newPrefix) => {
   guildPrefixes[guildId] = newPrefix
 }
@@ -145,10 +148,11 @@ module.exports.loadPrefixes = async (client) => {
         const guildId = guild[1].id
 
         const result = await commandPrefixSchema.findOne({ _id: guildId })
-        guildPrefixes[guildId] = result.prefix
+        guildPrefixes[guildId] = result ? result.prefix : globalPrefix
       }
-    } finally {
+    }
+    finally {
       mongoose.connection.close()
     }
   })
-} */
+}

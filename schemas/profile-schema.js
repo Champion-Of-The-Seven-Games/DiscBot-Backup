@@ -5,14 +5,17 @@ const reqString = {
   required: true
 }
 
-// store the guild id, user id, xp, level and money
+// store the data in this schema
 const profileSchema = mongoose.Schema({
+  // the guild and user id to use later for finding
   guildId: reqString,
   userId: reqString,
+  // coins for the economy system
   coins: {
     type: Number,
     default: 0,
   },
+  // xp and level for the leveling system
   xp: {
     type: Number,
     default: 0,
