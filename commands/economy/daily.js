@@ -17,7 +17,7 @@ module.exports = {
     const {id} = member
 
     if (claimedCache.includes(id)) {
-      message.reply('You have already claimed todays rewards')
+      message.reply('You have already claimed your rewards in the past 24 hours')
       return
     }
 
@@ -37,7 +37,7 @@ module.exports = {
 
           if (diffDays <= 1) {
             claimedCache.push(id)
-            message.reply('You have already claimed todays rewards')
+            message.reply('You have already claimed your rewards in the past 24 hours')
             return
           }
         }
