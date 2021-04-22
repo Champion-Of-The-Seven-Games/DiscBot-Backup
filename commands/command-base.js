@@ -97,6 +97,7 @@ module.exports.listen = (client) => {
       }
 
       const {
+        commands,
         expextedArgs,
         minArgs = 0,
         maxArgs = null,

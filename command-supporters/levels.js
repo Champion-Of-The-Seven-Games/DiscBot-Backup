@@ -65,3 +65,49 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
 }
 
 module.exports.addXP = addXP
+
+// funciton to get the level of a user
+module.exports.getLevel = async (guildId, userId) => {
+
+  return await mongo().then(async (mongoose) => {
+    try {
+      const result = await profileSchema.findOne({
+        guildId,
+        userId,
+      })
+      if (result) {
+        level = result.level
+        return level
+      }
+      else {
+        console.log('no data found')
+        return
+      }
+    } finally {
+      mongoose.connection.close()
+    }
+  })
+}
+
+// funciton to get the xp of a user
+module.exports.getXp = async (guildId, userId) => {
+
+  return await mongo().then(async (mongoose) => {
+    try {
+      const result = await profileSchema.findOne({
+        guildId,
+        userId,
+      })
+      if (result) {
+        xp = result.xp
+        return xp
+      }
+      else {
+        console.log('no xp found')
+        return
+      }
+    } finally {
+      mongoose.connection.close()
+    }
+  })
+}
