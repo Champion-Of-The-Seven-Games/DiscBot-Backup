@@ -37,6 +37,7 @@ Timer - Set a  message to be sent after a specific time
           value: `
 Info - Displays information about the bot
 ServerInfo - Displays information about the server
+Avatar - Displays the avatar of a user
 Invite - Displays the link to invite the bot to any server
 Latency - Checks the connection strength of the bot
 Magic - Does magic, just try

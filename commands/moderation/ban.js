@@ -1,24 +1,25 @@
 module.exports = {
   commands: ['Ban', 'ban', 'Block', 'block'],
-  description: 'bans the mentioned user unless they have a higher role than the bot',
-  epextedArgs: '<mention the user to ban>',
+  description: 'Bans the mentioned user unless they have a higher role than the bot',
+  expectedArgs: '<mention the user to kick> <reason>',
   minArgs: 1,
-  maxArgs: 1,
   permissions: 'BAN_MEMBERS',
-  permissionError: 'You do not have ban members permission',
-  callback: (message, arguments, client) => {
+  permissionError: 'You do not have kick members permission',
+  callback: (message, arguments, text) => {
     const {member, mentions} = message
-    const tag = `<@${member.id}>`
-
-    if (!client.user.hasPermission('BAN_MEMBERS')) {
-      message.channel.send('The bot doesnt have ban members permission')
-    }
     const target = mentions.users.first()
+    const reason = text.replace(target, '')
+
+    try {
     if (target)
     {
       const targetMember = message.guild.members.cache.get(target.id)
-      targetMember.ban()
-      message.channel.send(`${tag} has been banned`)
+      targetMember.kick(reason)
+      message.channel.send('The user has been kicked')
+    }
+    }
+    catch(err) {
+      message.channel.send(err.name)
     }
   },
 }

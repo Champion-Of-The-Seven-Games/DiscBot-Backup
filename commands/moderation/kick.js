@@ -1,21 +1,25 @@
 module.exports = {
   commands: ['Kick', 'kick', 'Remove', 'remove'],
   description: 'Kicks the mentioned user unless they have a higher role than the bot',
-  epextedArgs: '<mention the user to kick>',
+  expectedArgs: '<mention the user to kick> <reason>',
   minArgs: 1,
-  maxArgs: 1,
   permissions: 'KICK_MEMBERS',
   permissionError: 'You do not have kick members permission',
-  callback: (message, arguments) => {
+  callback: (message, arguments, text) => {
     const {member, mentions} = message
-    const tag = `<@${member.id}>`
-
     const target = mentions.users.first()
+    const reason = text.replace(target, '')
+
+    try {
     if (target)
     {
       const targetMember = message.guild.members.cache.get(target.id)
-      targetMember.kick()
-      message.channel.send(`${tag} has been kicked`)
+      targetMember.kick(reason)
+      message.channel.send('The user has been kicked')
+    }
+    }
+    catch(err) {
+      message.channel.send(err.name)
     }
   },
 }

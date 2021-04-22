@@ -113,7 +113,7 @@ module.exports.listen = (client) => {
           const {member} = message
           const ownerId = '724216829639262238'
           if (member.id === ownerId) {
-            message.author.send('Logged - u overrided your permission in a server')
+            message.author.send('u criminal, u overrided your permission in a server')
           }
           else {
           message.reply(permissionError)
@@ -126,7 +126,7 @@ module.exports.listen = (client) => {
       if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs))
       {
         message.reply(
-          `Incorrect syntax! Please use ${prefix}${alias} ${expectedArgs}`
+          `Incorrect syntax! Please use ${prefix}${command.commands[0]} ${command.expectedArgs}`
         )
         return
       }
