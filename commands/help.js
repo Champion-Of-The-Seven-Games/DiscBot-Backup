@@ -44,6 +44,13 @@ Invite - Displays the link to invite the bot to any server
 Latency - Checks the connection strength of the bot
 Magic - Does magic, just try
           `,
+        },
+        {
+          name: 'Images',
+          value: `
+Cat - Display the pic of a cute cat
+Meme - Sends memes from reddit
+          `,
         }
       )
     message.channel.send(embed)
