@@ -6,12 +6,33 @@ module.exports = {
     embed = new Discord.MessageEmbed()
       .setTitle('Information about the bot')
       .setColor('#00AAFF')
-      .setDescription(`
-Created by - Champion Of The Seven Games
-Created on - April 17 2021
-
-Bot status - Online
-      `)
+      .addFields(
+        {
+          name: 'Name',
+          value: 'DiscBot',
+          inline: true,
+        },
+        {
+          name: 'Bot tag',
+          value: '6079',
+          inline: true,
+        },
+        {
+          name: 'Global Prefix',
+          value: '~',
+          inline: true,
+        },
+        {
+          name: 'Time since last restart',
+          value: `${process.uptime().toFixed(2)}s`,
+          inline: true,
+        },
+        {
+          name: 'Version',
+          value: '1.0.0',
+          inline: true,
+        }
+      )
     message.channel.send(embed)
   },
 }
