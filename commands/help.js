@@ -29,6 +29,7 @@ Ban - Bans the mentioned user
 Clear - Clears a certain amount of messages
 CreateChannel - Creates a text or voice channel
 Prefix - Changes the prefix of the bot
+Giveaway - starts a giveaway
 Timer - Set a  message to be sent after a specific time
           `,
         },
