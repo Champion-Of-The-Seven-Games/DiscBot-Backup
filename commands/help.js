@@ -37,6 +37,7 @@ Timer - Set a  message to be sent after a specific time
           name: 'Misc',
           value: `
 Info - Displays information about the bot
+UserInfo - Displays information about a user
 ServerInfo - Displays information about the server
 Avatar - Displays the avatar of a user
 Invite - Displays the link to invite the bot to any server
