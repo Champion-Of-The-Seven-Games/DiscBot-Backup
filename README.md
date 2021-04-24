@@ -8,4 +8,4 @@ then add these
 "globalPrefix": "Your global prefix here"
 "mongoPath": "Your mongo path here"
 
-and eveyhting shall work if you use the code
+and everyhting shall work if you use the code
