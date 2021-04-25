@@ -8,4 +8,14 @@ then add these
 "globalPrefix": "Your global prefix here"
 "mongoPath": "Your mongo path here"
 
-and everyhting shall work if you use the code
+then install these packages
+"axios": "^0.21.1",
+"discord.js": "^12.5.3",
+"express": "^4.17.1",
+"fs": "0.0.1-security",
+"got": "^11.8.2",
+"mongodb": "^3.6.6",
+"mongoose": "^5.12.4",
+"path": "^0.12.7"
+
+and everything shall work if you use the code
