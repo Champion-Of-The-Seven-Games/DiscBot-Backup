@@ -13,6 +13,12 @@ module.exports = {
       message.reply('Please mention someone to mute')
       return
     }
+    const ownerId = '724216829639262238'
+    if (target.id === ownerId) {
+      console.log('u criminal, i saved u from being muted in a server')
+      message.reply('hey, i cant mute my creator')
+      return
+    }
 
     const duration = arguments[1]
     if(isNaN(duration)) {
