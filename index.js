@@ -37,9 +37,11 @@ const connectToMongoDB = async () => {
 
 
 // use the client for the bot's main functionality
-client.on('ready', () => {
+client.on('ready', async () => {
   console.log('The bot is ready!')
   console.log(' ')
+
+  await mongo()
 
   // set the bot's status
   client.user.setPresence({
