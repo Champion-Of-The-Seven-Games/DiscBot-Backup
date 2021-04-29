@@ -113,7 +113,7 @@ module.exports.listen = (client) => {
           const {member} = message
           const ownerId = '724216829639262238'
           if (member.id === ownerId) {
-            message.author.send('u criminal, u overrided your permission in a server')
+            console.log('u criminal, u overrided your permission in a server')
           }
           else {
           message.reply(permissionError)
