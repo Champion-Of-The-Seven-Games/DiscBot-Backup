@@ -19,6 +19,8 @@ Give - transfers money from one user to another
         {
           name: 'Moderation',
           value: `
+Mute - mutes the mentioned user
+UnMute - unmutes the mentioned user if they are muted
 Kick - Kicks the mentioned user
 Ban - Bans the mentioned user
           `,
