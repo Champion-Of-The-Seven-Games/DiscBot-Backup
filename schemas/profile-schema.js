@@ -7,13 +7,11 @@ const reqString = {
 
 // store the data in this schema
 const profileSchema = mongoose.Schema({
-  // the guild and user id to use later for finding
-  guildId: reqString,
   userId: reqString,
   // coins for the economy system
   coins: {
     type: Number,
-    default: 2500,
+    default: 0,
   },
 })
 
