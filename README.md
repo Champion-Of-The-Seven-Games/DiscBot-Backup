@@ -16,6 +16,8 @@ then install these packages
 "got": "^11.8.2",
 "mongodb": "^3.6.6",
 "mongoose": "^5.12.4",
-"path": "^0.12.7"
+"path": "^0.12.7",
+"discord-canvas": "^1.4.1",
+"canvacord": "^5.2.0"
 
 and everything shall work if you use the code

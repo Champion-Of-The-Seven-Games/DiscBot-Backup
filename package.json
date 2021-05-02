@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "canvacord": "^5.2.0",
+    "discord-canvas": "^1.4.1",
     "discord.js": "^12.5.3",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
