@@ -1,15 +1,13 @@
 // import mongoose to store data in the mongo database
 const mongoose = require('mongoose')
-const reqString = {
-  type: String,
-  required: true
-}
 
 // store the data in this schema
 const dailyRewardsSchema = mongoose.Schema(
   {
-  guildId: reqString,
-  userId: reqString,
+  userId: {
+    type: String,
+    required: true
+  },
   },
   {
     timestamps: true,

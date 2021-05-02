@@ -13,16 +13,7 @@ const profileSchema = mongoose.Schema({
   // coins for the economy system
   coins: {
     type: Number,
-    default: 0,
-  },
-  // xp and level for the leveling system
-  xp: {
-    type: Number,
-    default: 0,
-  },
-  level: {
-    type: Number,
-    default: 1,
+    default: 2500,
   },
 })
 

@@ -7,7 +7,7 @@ module.exports = {
   minArgs: 2,
   maxArgs: 2,
   callback: async (message, arguments) => {
-    const {guild, member} = message
+    const {member} = message
     const target = message.mentions.users.first()
 
     if (!target) {
@@ -21,19 +21,17 @@ module.exports = {
       return
     }
 
-    const coinsOwned = await economy.getCoins(guild.id, member.id)
+    const coinsOwned = await economy.getCoins(member.id)
     if (coinsOwned < coinsToGive) {
       message.reply(`You do not have ${coinsToGive} coins!!`)
       return
     }
 
     const remainingCoins = await economy.addCoins(
-      guild.id,
       member.id,
       coinsToGive * -1
     )
     const newBalalnce = await economy.addCoins(
-      guild.id,
       target.id,
       coinsToGive
     )

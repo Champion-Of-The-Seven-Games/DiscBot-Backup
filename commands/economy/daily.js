@@ -24,7 +24,7 @@ module.exports = {
     await mongo().then(async mongoose => {
       try {
         const results = await dailyRewardsSchema.findOne(
-          { guildId: guild.id,
+          {
             userId: id,
           }
         )
@@ -44,11 +44,9 @@ module.exports = {
 
         await dailyRewardsSchema.findOneAndUpdate(
           {
-            guildId: guild.id,
             userId: id,
           },
           {
-            guildId: guild.id,
             userId: id,
           },
           {
@@ -57,7 +55,6 @@ module.exports = {
           
         claimedCache.push(id)
         await economy.addCoins(
-          guild.id,
           id,
           1000
         )

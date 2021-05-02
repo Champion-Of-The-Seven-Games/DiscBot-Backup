@@ -9,9 +9,8 @@ module.exports = {
   callback: async (message) => {
     const target = message.mentions.users.first() || message.author
     const targetId = target.id
-    const guildId = message.guild.id
     const userId = target.id
-    const money = await economy.getCoins(guildId, userId)
+    const money = await economy.getCoins(userId)
 
     message.reply(`The user has ${money} coins`)
   },
