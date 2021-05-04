@@ -112,7 +112,7 @@ module.exports.listen = (client) => {
       } = command
 
       // A command has been ran
-
+      // make sure the command is ran in a server if required
       if (useDm != true && !guild) {
         message.channel.send('You can use this command only in a server')
         return
