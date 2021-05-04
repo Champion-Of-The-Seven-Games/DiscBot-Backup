@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 module.exports = {
   commands: ['Help', 'help', 'Commands', 'commands'],
   description: 'Displays all the commands',
+  useDm: true,
   expectedArgs: '<category> <command>',
   minArgs: 0,
   maxArgs: 2,

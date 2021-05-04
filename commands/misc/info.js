@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 module.exports = {
   commands: ['Info', 'info', 'Information', 'information'],
   description: 'Displays information about the bot',
+  useDm: true,
   callback: (message) => {
     embed = new Discord.MessageEmbed()
       .setTitle('Information about the bot')

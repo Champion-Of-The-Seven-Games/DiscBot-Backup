@@ -12,9 +12,10 @@ clearCache()
 module.exports = {
   commands: ['Daily', 'daily', 'ClaimDaily', 'claimdaily'],
   description: 'gives daily rewards once in 24 hours',
+  useDm: true,
   callback: async (message) => {
-    const {guild, member} = message
-    const {id} = member
+    const {author} = message
+    const {id} = author
 
     if (claimedCache.includes(id)) {
       message.reply('You have already claimed your rewards in the past 24 hours')

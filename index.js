@@ -1,11 +1,12 @@
 // import discord.js and create client to interact with the api
 const Discord = require('discord.js')
 const client = new Discord.Client()
-// import config.json to use the login token and prefix
+
+// import the required files
 const config = require('./config.json')
-// import path and fs to use the command handler
 const loadCommands = require('./commands/load-commands')
 
+// tutorial playlist link
 // https://www.youtube.com/playlist?list=PLaxxQQak6D_fxb9_-YsmRwxfw5PH9xALe
 
 // import and use express for the website
@@ -24,6 +25,7 @@ const connectToMongoDB = async () => {
   await mongo().then((mongoose) => {
     try 
   {
+    console.clear()
     console.log('Connected to MongoDB!')
   }
   finally
