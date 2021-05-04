@@ -55,7 +55,6 @@ const allCommands = {}
 module.exports = (commandOptions) => {
   let {
     commands,
-    description = 'no information available on this command',
     permissions = [],
   } = commandOptions
 
@@ -85,7 +84,10 @@ module.exports.listen = (client) => {
   // listen for commands
   client.on('message', (message) => {
     const { member, content, guild } = message
-    const prefix = guildPrefixes[guild.id] || globalPrefix
+
+    let guildPrefs = ''
+    guild ? guildPrefs = guildPrefixes[guild.id] : guildPrefs = globalPrefix
+    const prefix = guildPrefs || globalPrefix
 
     const arguments = content.split(/[ ]+/)
     const name = arguments.shift()
@@ -93,11 +95,14 @@ module.exports.listen = (client) => {
     if (name.startsWith(prefix)) {
       const command = allCommands[name.replace(prefix, '')]
       if (!command) {
+        message.reply(`That is not a command, please use <prefix>Help all for a list of all valid commands`)
         return
       }
 
       const {
         commands,
+        description = 'no information available on this command',
+        useDm = false,
         expextedArgs,
         minArgs = 0,
         maxArgs = null,
@@ -107,6 +112,12 @@ module.exports.listen = (client) => {
       } = command
 
       // A command has been ran
+
+      if (useDm != true && !guild) {
+        message.channel.send('You can use this command only in a server')
+        return
+      }
+
       // Ensure the user has the required permissions
       for (const permission of permissions) {
         if (!member.hasPermission(permission)) {
