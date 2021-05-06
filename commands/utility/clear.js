@@ -21,8 +21,8 @@ module.exports = {
     }
 
     const delmsg = +arguments[0] + 1
-    message.channel.messages.fetch({limit: delmsg}).then(messages => {
-      message.channel.bulkDelete(messages)
+    message.channel.messages.fetch({limit: delmsg}, true).then(messages => {
+      message.channel.bulkDelete(messages, true)
     })
     message.channel.send(`Deleted ${arguments[0]} messages`).then((delConfirmMessage) => {
       setTimeout(() => {
