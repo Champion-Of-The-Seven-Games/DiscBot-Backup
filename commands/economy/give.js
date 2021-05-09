@@ -14,6 +14,11 @@ module.exports = {
     if (message.mentions.users.first()) {
       const target = message.mentions.users.first()
 
+      if (target.id === message.author.id) {
+        message.reply('why do u want to give money to yourself')
+        return
+      }
+
       const coinsToGive = arguments[1]
       if (!isNaN(coinsToGive)) {
         const coinsOwned = await economy.getCoins(member.id)
@@ -68,6 +73,9 @@ module.exports = {
             message.reply(`you have given ${coinsToGive} coins to <@${target.id}>, they now have ${newBalalnce} and you have ${remainingCoins} coins`)
 
             try {
+              if (target.id === '828225498714603521') {
+                return
+              }
               target.send(`You have been given ${coinsToGive} coins by ${message.author.username} in ${message.guild.name}, you now have ${newBalalnce} coins`)
             }catch{}
           }
