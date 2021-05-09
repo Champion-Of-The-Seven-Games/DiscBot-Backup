@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-const canvacord = require('canvacord')
 
 module.exports = {
   commands: ['Test', 'test'],
@@ -40,11 +39,14 @@ module.exports = {
         return
       }
 
+      da = []
       collected.forEach((value) => {
         let data = `${answerStart[acounter]} ${value.content}`
         acounter++
-        message.channel.send(data)
+        da.push(data)
       })
+      message.channel.send(da[0])
+      message.channel.send(da[1])
     })
   },
 }

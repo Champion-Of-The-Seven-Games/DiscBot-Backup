@@ -45,6 +45,7 @@ client.on('ready', async () => {
 
   // set the bot's status
   client.user.setPresence({
+    
       activity: {
         name: 'Use ~Help for help',
         type: 0,

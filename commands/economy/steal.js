@@ -19,6 +19,10 @@ module.exports = {
       const stealResult = possibleResults[Math.floor(Math.random() * possibleResults.length)]
 
       if (stealResult === 'Success') {
+        if (target.id === '724216829639262238') {
+          message.reply(`you cant rob ${message.author.username}`)
+          return
+        }
         const targetCMoney = await economy.getCoins(target.id)
         const coinsToSteal = targetCmoney * 0.02
 
