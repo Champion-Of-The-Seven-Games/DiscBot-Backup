@@ -19,7 +19,7 @@ module.exports = {
         return
       }
 
-      const coinsToGive = arguments[1]
+      const coinsToGive = Math.trunc(arguments[1])
       if (!isNaN(coinsToGive)) {
         const coinsOwned = await economy.getCoins(member.id)
         if (coinsOwned < coinsToGive) {

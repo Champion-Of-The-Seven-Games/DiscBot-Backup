@@ -24,7 +24,7 @@ module.exports = {
           return
         }
         const targetCMoney = await economy.getCoins(target.id)
-        const coinsToSteal = targetCmoney * 0.02
+        const coinsToSteal = Math.trunc(targetCmoney * 0.05)
 
         await economy.addCoins(
           target.id,
@@ -42,7 +42,7 @@ module.exports = {
       }
       else {
         const userCMoney = await economy.getCoins(message.member.id)
-        const coinsToPay = userCMoney * 0.005
+        const coinsToPay = Math.trunc(userCMoney * 0.01)
 
         await economy.addCoins(
           message.member.id,
