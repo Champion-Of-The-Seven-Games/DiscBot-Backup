@@ -112,6 +112,12 @@ module.exports.listen = (client) => {
       } = command
 
       // A command has been ran
+      // Make sure its an actual person uusing the command
+      if (member.user.bot) {
+        message.reply('Stop fellow bot, i know your owner is trying to cheat')
+        return
+      }
+
       // make sure the command is ran in a server if required
       if (useDm != true && !guild) {
         message.channel.send('You can use this command only in a server')

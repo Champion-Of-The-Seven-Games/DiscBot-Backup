@@ -10,8 +10,8 @@ module.exports = {
     if (message.mentions.users.first()) {
       const target = message.mentions.users.first()
 
-      if (target.id === '828225498714603521') {
-        message.reply(`hey, i wont let u rob me`)
+      if (target.bot) {
+        message.reply(`I wont let you rob me or my kind, back off!!`)
         return
       }
 
@@ -24,7 +24,7 @@ module.exports = {
           return
         }
         const targetCMoney = await economy.getCoins(target.id)
-        const coinsToSteal = Math.trunc(targetCmoney * 0.05)
+        const coinsToSteal = Math.trunc(targetCMoney * 0.05)
 
         await economy.addCoins(
           target.id,
