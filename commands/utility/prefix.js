@@ -1,12 +1,11 @@
 const mongo = require('../../mongo')
 const commandPrefixSchema = require('../../schemas/command-prefix-schema')
 
-// Importing command-base so we have access to the
-// "updateCache" function which I forgot to cover in the video
 const commandBase = require('../command-base')
 
 module.exports = {
   commands: ['Prefix', 'prefix', 'SetPrefix', 'setprefix'],
+  description: 'Sets a prefix for this server',
   expectedArgs: '<the new prefix>',
   minArgs: 1,
   maxArgs: 1,

@@ -4,7 +4,7 @@ module.exports = {
   expectedArgs: '<mention the user to kick> <reason>',
   minArgs: 1,
   permissions: 'BAN_MEMBERS',
-  permissionError: 'You do not have kick members permission',
+  permissionError: 'You do not have ban members permission',
   callback: (message, arguments, text) => {
     const {member, mentions} = message
     const target = mentions.users.first()

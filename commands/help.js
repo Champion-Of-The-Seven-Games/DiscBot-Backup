@@ -1,14 +1,34 @@
 const Discord = require('discord.js')
+const loadCommands = require('../commands/load-commands')
 
 module.exports = {
   commands: ['Help', 'help', 'Commands', 'commands'],
   description: 'Displays all the commands',
-  useDm: true,
-  expectedArgs: '<category> <command>',
+  expectedArgs: '<command name or category>',
   minArgs: 0,
-  maxArgs: 2,
-  callback: (message, arguments, text) => {
-    const helpText = text.toLowerCase()
+  maxArgs: 1,
+  useDm: true,
+  callback: (message, arguments, text, client) => {
+    const request = text.toLowerCase()
+    let reply = ``
+    const commands = loadCommands(client)
+    
+    for (const command of commands) {
+      const mainCommand = typeof command.commands === 'string' ? command.commands : command.commands[0]
+      const args = command.expectedArgs ? ` ${command.expectedArgs}` : ``
+      const {description} = command
+
+      reply += `
+**${mainCommand}** - ${description}`
+    }
+    const embed = new Discord.MessageEmbed()
+      .setTitle('All the commands')
+      .setDescription(reply)
+      .setColor('#00AAFF')
+      .setFooter('Use ~ or guild prefix if any before all commands')
+    message.channel.send(embed)
+
+    /* const helpText = text.toLowerCase()
     if (helpText === 'all') {
       const allEmbed = new Discord.MessageEmbed()
         .setTitle('All the commands')
@@ -144,6 +164,6 @@ Images
         .setColor('#00AAFF')
         .setFooter('use help <category> or help all')
       message.channel.send(categoriesEmbed)
-    }
+    } */
   },
 }
