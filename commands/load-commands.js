@@ -26,11 +26,15 @@ module.exports = (client) => {
         if (client) {
           commandBase(option)
         }
+        else {}
       }
     }
   }
 
   readCommands('../commands')
-  commandBase.listen(client)
+  
+  if (client) {commandBase.listen(client)}
+  else {}
+
   return commands
 }

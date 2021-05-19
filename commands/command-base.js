@@ -90,7 +90,8 @@ module.exports.listen = (client) => {
     const prefix = guildPrefs || globalPrefix
 
     const arguments = content.split(/[ ]+/)
-    const name = arguments.shift()
+    const cname = arguments.shift()
+    const name = cname.toLowerCase()
 
     if (name.startsWith(prefix)) {
       const command = allCommands[name.replace(prefix, '')]

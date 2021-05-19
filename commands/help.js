@@ -4,67 +4,95 @@ const loadCommands = require('../commands/load-commands')
 module.exports = {
   commands: ['Help', 'help', 'Commands', 'commands'],
   description: 'Displays all the commands',
-  expectedArgs: '<command name or category>',
+  expectedArgs: '<command or category(optional)>',
   minArgs: 0,
   maxArgs: 1,
   useDm: true,
-  callback: (message, arguments, text, client) => {
+  callback: (message, arguments, text) => {
     const request = text.toLowerCase()
     let reply = ``
-    const commands = loadCommands(client)
+    let found = false
+    const commands = loadCommands()
     
     for (const command of commands) {
-      const mainCommand = typeof command.commands === 'string' ? command.commands : command.commands[0]
-      const args = command.expectedArgs ? ` ${command.expectedArgs}` : ``
+      const mainCommand = command.commands[0]
+      const args = command.expectedArgs ? command.expectedArgs : 'No arguments needed'
+      const alias = command.commands[3] ? command.commands[3] : 'No alias'
       const {description} = command
+      const miArgs = command.minArgs ? command.minArgs : 'none nessescary'
+      const maArgs = command.maxArgs ? command.maxArgs : 'infinite'
 
-      reply += `
-**${mainCommand}** - ${description}`
-    }
-    const embed = new Discord.MessageEmbed()
-      .setTitle('All the commands')
-      .setDescription(reply)
-      .setColor('#00AAFF')
-      .setFooter('Use ~ or guild prefix if any before all commands')
-    message.channel.send(embed)
-
-    /* const helpText = text.toLowerCase()
-    if (helpText === 'all') {
-      const allEmbed = new Discord.MessageEmbed()
-        .setTitle('All the commands')
-        .setColor('#00AAFF')
-        .setFooter('use the guild prefix else if any or else use ~ before every commmand')
-        .addFields(
+      if (request === command.commands[1]) {
+        const comEmbed = new Discord.MessageEmbed()
+          .setTitle(`${command.commands[1]} command`)
+          .setDescription(`${description}`)
+          .setFooter('Use ~ or guild prefix if any before the command')
+          .setColor('#00AAFF')
+          .addFields(
           {
-            name: 'Economy',
-            value: `
-Balance - Displays the balance of a user
-Daily - Gives a reward to user once in every 24 hours
-Give - transfers money from one user to another
-            `,
+            name: 'Aliases',
+            value: `${alias}`,
+            inline: true,
           },
           {
-            name: 'Moderation',
-            value: `
+            name: `Arguments (min: ${miArgs}, max: ${maArgs})`,
+            value: `${args}`,
+            inline: true,
+          },
+          )
+        message.channel.send(comEmbed)
+        found = true
+      }
+      if (found) {
+        break
+      }
+    }
+    if (found != true) {
+      switch (request) {
+        case 'all':
+          const allEmbed = new Discord.MessageEmbed()
+            .setTitle('All the commands')
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+            .addFields(
+            {
+              name: 'Economy',
+              value: `
+Balance - Displays the balance of a user
+Daily - Gives a reward to user once in every 24 hours
+Give - Transfers money from one user to another
+Steal - Robs a user
+              `,
+            },
+            {
+              name: 'Moderation',
+              value: `
 Mute - mutes the mentioned user
 UnMute - unmutes the mentioned user if they are muted
 Kick - Kicks the mentioned user
 Ban - Bans the mentioned user
-            `,
-          },
-          {
-            name: 'Utility',
-            value: `
+              `,
+            },
+            {
+              name: 'Images',
+              value: `
+Avatar - Display the avatar of a user
+Cat - Display the pic of a cute cat
+Meme - Sends memes from reddit
+              `,
+            },
+            {
+              name: 'Utility',
+              value: `
 Clear - Clears a certain amount of messages
-CreateChannel - Creates a text or voice channel
 Prefix - Changes the prefix of the bot
 Giveaway - starts a giveaway
 Timer - Set a  message to be sent after a specific time
-            `,
-          },
-          {
-            name: 'Misc',
-            value: `
+              `,
+            },
+            {
+              name: 'Misc',
+              value: `
 Info - Displays information about the bot
 UserInfo - Displays information about a user
 ServerInfo - Displays information about the server
@@ -72,61 +100,66 @@ Avatar - Displays the avatar of a user
 Invite - Displays the link to invite the bot to any server
 Latency - Checks the connection strength of the bot
 Magic - Does magic, just try
-            `,
-          },
-          {
-            name: 'Images',
-            value: `
-Cat - Display the pic of a cute cat
-Meme - Sends memes from reddit
-            `,
-          }
-        )
-      message.channel.send(allEmbed)
-    }
-    else if (helpText === 'Economy') {
-      const economyEmbed = new Discord.MessageEmbed()
-        .setTitle('All the economy commands')
-        .setDescription(`
+              `,
+            }
+          )
+          message.channel.send(allEmbed)
+          break
+        case 'economy':
+          const ecoEmbed = new Discord.MessageEmbed()
+            .setTitle('All the economy commands')
+            .setDescription(`
 Balance - Displays the balance of a user
 Daily - Gives a reward to user once in every 24 hours
-Give - transfers money from one user to another
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help economy <command> or help <command>')
-      message.channel.send(economyEmbed)
-    }
-    else if (helpText === 'Moderation' || 'moderation') {
-      const moderationEmbed = new Discord.MessageEmbed()
-        .setTitle('All the moderation commands')
-        .setDescription(`
+Give - Transfers money from one user to another
+Steal - Robs a user
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+          message.channel.send(ecoEmbed)
+          break
+        case 'moderation':
+          const modEmbed = new Discord.MessageEmbed()
+            .setTitle('All the moderation commands')
+            .setDescription(`
 Mute - mutes the mentioned user
-UnMute - unmutes the mentioned user else if they are muted
+UnMute - unmutes the mentioned user if they are muted
 Kick - Kicks the mentioned user
 Ban - Bans the mentioned user
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help moderation <command> or help <command>')
-      message.channel.send(moderationEmbed)
-    }
-    else if (helpText === 'Utility' || 'utility') {
-      const utilityEmbed = new Discord.MessageEmbed()
-        .setTitle('All the utility commands')
-        .setDescription(`
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+          message.channel.send(modEmbed)
+          break
+        case 'image':
+          const imgEmbed = new Discord.MessageEmbed()
+            .setTitle('All the images commands')
+            .setDescription(`
+Avatar - Display the avatar of a user
+Cat - Display the pic of a cute cat
+Meme - Sends memes from reddit
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+          message.channel.send(imgEmbed)
+          break
+        case 'utility':
+          const utilEmbed = new Discord.MessageEmbed()
+            .setTitle('All the images commands')
+            .setDescription(`
 Clear - Clears a certain amount of messages
-CreateChannel - Creates a text or voice channel
 Prefix - Changes the prefix of the bot
 Giveaway - starts a giveaway
 Timer - Set a  message to be sent after a specific time
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help utility <command> or help <command>')
-      message.channel.send(utilityEmbed)
-    }
-    else if (helpText === 'Misc' || 'misc') {
-      const miscEmbed = new Discord.MessageEmbed()
-        .setTitle('All the misc commands')
-        .setDescription(`
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+          message.channel.send(utilEmbed)
+          break
+        case 'misc':
+          const miscEmbed = new Discord.MessageEmbed()
+            .setTitle('All the images commands')
+            .setDescription(`
 Info - Displays information about the bot
 UserInfo - Displays information about a user
 ServerInfo - Displays information about the server
@@ -134,36 +167,27 @@ Avatar - Displays the avatar of a user
 Invite - Displays the link to invite the bot to any server
 Latency - Checks the connection strength of the bot
 Magic - Does magic, just try
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help misc <command> or help <command>')
-      message.channel.send(miscEmbed)
-    }
-    else if (helpText === 'Image' || 'image') {
-      const imageEmbed = new Discord.MessageEmbed()
-        .setTitle('All the image commands')
-        .setDescription(`
-Cat - Display the pic of a cute cat
-Meme - Sends memes from reddit
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help image <command> or help <command>')
-      message.channel.send(imageEmbed)
-    }
-    else {
-      const categoriesEmbed = new Discord.MessageEmbed()
-        .setTitle('All the command categories')
-        .setDescription(`
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <command> for more info on the commands')
+          message.channel.send(miscEmbed)
+          break
+        default:
+          const catEmbed = new Discord.MessageEmbed()
+            .setTitle('All the command categories')
+            .setDescription(`
 All
 Economy
 Moderation
+Images
 Utility
 Misc
-Images
-        `)
-        .setColor('#00AAFF')
-        .setFooter('use help <category> or help all')
-      message.channel.send(categoriesEmbed)
-    } */
+            `)
+            .setColor('#00AAFF')
+            .setFooter('use <prefix>help <category> or <prefix>help all for the commands')
+          message.channel.send(catEmbed)
+          break
+      }
+    }
   },
 }
