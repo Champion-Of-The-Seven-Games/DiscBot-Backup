@@ -6,6 +6,8 @@ module.exports = {
   expectedArgs: '<mention the user to rob>',
   minArgs: 1,
   maxArgs: 1,
+  cooldown: 30,
+  cooldownError: 'The police is looking for you after your last robbery, wait some time',
   callback: async (message) => {
     if (message.mentions.users.first()) {
       const target = message.mentions.users.first()
@@ -15,7 +17,12 @@ module.exports = {
         return
       }
 
-      const possibleResults = ['Fail', 'Fine', 'Pay', 'Success', 'lost', 'useless', 'loose']
+      if (message.author.id === target.id) {
+        message.reply('why would u wanna rob yourself')
+        return
+      }
+
+      const possibleResults = ['Fail', 'Fine', 'Pay', 'Success']
       const stealResult = possibleResults[Math.floor(Math.random() * possibleResults.length)]
 
       if (stealResult === 'Success') {

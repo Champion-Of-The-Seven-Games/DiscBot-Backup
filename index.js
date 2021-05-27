@@ -44,10 +44,7 @@ client.on('ready', async () => {
   await mongo()
 
   // set the bot's status
-  client.user.setActivity("for commands | use ~Help", {
-    type: "WATCHING",
-    url: "https://discord.com/api/oauth2/authorize?client_id=828225498714603521&permissions=8&scope=bot",
-  })
+  client.user.setPresence("checking for commands | use ~Help")
   
   loadCommands(client)
 })

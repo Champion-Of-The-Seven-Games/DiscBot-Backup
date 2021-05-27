@@ -2,10 +2,10 @@ const Discord = require('discord.js')
 
 module.exports = {
   commands: ['Test', 'test'],
-  decription: 'tests message collectors',
+  decription: 'tests if the bot is working',
   useDm: true,
   callback: async (message) => {
-    const questions = [
+    /*const questions = [
       'What should i call you?',
       'u gud or no?',
     ]
@@ -47,6 +47,7 @@ module.exports = {
       })
       message.channel.send(da[0])
       message.channel.send(da[1])
-    })
+    }) */
+    mesage.reply('Test successfull')
   },
 }

@@ -8,6 +8,7 @@ module.exports = {
   minArgs: 0,
   maxArgs: 1,
   useDm: true,
+  cooldown: 5,
   callback: (message, arguments, text) => {
     const request = text.toLowerCase()
     let reply = ``

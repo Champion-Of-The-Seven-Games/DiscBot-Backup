@@ -50,12 +50,14 @@ const validatePermissions = (permissions) => {
 
 // save commands inside an object
 const allCommands = {}
+let recentlyUsed = []
 
 // export and check all the command options
 module.exports = (commandOptions) => {
   let {
     commands,
     permissions = [],
+    cooldown = -1,
   } = commandOptions
 
   // Ensure the command and aliases are in an array
@@ -83,7 +85,7 @@ module.exports = (commandOptions) => {
 module.exports.listen = (client) => {
   // listen for commands
   client.on('message', (message) => {
-    const { member, content, guild } = message
+    const { member, author, content, guild } = message
 
     let guildPrefs = ''
     guild ? guildPrefs = guildPrefixes[guild.id] : guildPrefs = globalPrefix
@@ -109,12 +111,14 @@ module.exports.listen = (client) => {
         maxArgs = null,
         permissions,
         permissionError = 'You do not have permission to use this command',
+        cooldown = -1,
+        cooldownError = 'You are using the command too frequently, please wait some time',
         callback
       } = command
 
       // A command has been ran
-      // Make sure its an actual person uusing the command
-      if (member.user.bot) {
+      // Make sure its an actual person using the command
+      if (author.bot) {
         message.reply('Stop fellow bot, i know your owner is trying to cheat')
         return
       }
@@ -140,6 +144,13 @@ module.exports.listen = (client) => {
         }
       }
 
+      const ifGuild = guild ? guild.id : `${author.username}#${author.discriminator}`
+      let cooldownString = `${ifGuild}-${author.id}-${commands[0]}`
+      if (cooldown > 0 && recentlyUsed.includes(cooldownString)) {
+        message.reply(cooldownError)
+        return
+      }
+
       // Ensure that the user types in correct number of arguments
       if (arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs))
       {
@@ -147,6 +158,16 @@ module.exports.listen = (client) => {
           `Incorrect syntax! Please use ${prefix}${command.commands[0]} ${command.expectedArgs}`
         )
         return
+      }
+
+      if (cooldown > 0) {
+        recentlyUsed.push(cooldownString)
+
+        setTimeout(() => {
+          recentlyUsed = recentlyUsed.filter((string) => {
+            return string !== cooldownString
+          })
+        }, 1000 * cooldown)
       }
 
       // Finally handle the command if all requirements are met
